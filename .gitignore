@@ -1,0 +1,8 @@
+*.mat
+EvaluateInput/
+EvaluateOutput/
+CaseStudy/
+data/*.rar
+*.jpg
+*.eps
+*.asv
