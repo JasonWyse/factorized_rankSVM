@@ -28,7 +28,7 @@ while 1
     alpha_new = alpha_old - proper_eta * gradient;
     %[~,~,new_fun_val]  = lossFun_A(Q,A , alpha_new, C);%lossFun(gram_matrix , alpha_new, C);
     diff=abs(old_fun_val-new_fun_val);
-    if(diff > epsilon && ite_num < max_iterate_num)
+    if(ite_num < max_iterate_num)%diff > epsilon && 
         alpha_old = alpha_new;        
         ite_num = ite_num + 1;
         function_val(ite_num,1) = new_fun_val;

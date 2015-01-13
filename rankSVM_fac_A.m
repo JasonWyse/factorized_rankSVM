@@ -30,7 +30,7 @@ while 1
     t2 = toc;
     %     new_fun_val = lossFun(gram_matrix ,pps_index_by_qid_set, V_new, C);
     diff = abs(old_fun_val-new_fun_val);
-    if(diff > epsilon && ite_num < max_iterate_num)
+    if( ite_num < max_iterate_num)%diff > epsilon &&
         V_old = V_new;
         ite_num = ite_num + 1;
         function_val(ite_num,1) = new_fun_val;
@@ -55,10 +55,11 @@ while 1
         break;
     end
 end
- fprintf('diff=%f\n',diff);
+
+fprintf('diff=%f\n',diff);
 fun_val_file_name =  [evaluateOutput_dir 'fun_val_C_' num2str(C) '.txt'];
- write2file( evaluateOutput_dir,fun_val_file_name,function_val );
-alpha_hat = GetAlpha_by_vMatrix(V_new,pps_index_by_qid_set); 
+write2file( evaluateOutput_dir,fun_val_file_name,function_val );
+ 
 w_fac = alpha_hat'*sample_pp_fea;
 end
 
