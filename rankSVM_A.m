@@ -51,9 +51,16 @@ while 1
         end
     else
         break;
-    end
-    t3 = toc;
-%    disp(t1);
+    end    
+end
+if rem(ite_num,50) ~=0
+    [w,alpha_hat] = getW(A,alpha_new,sample_pp_fea);
+    w_file_name =  [evaluateOutput_dir 'w_ite' num2str(ite_num) '.txt'];
+    alpha_hat_file_name = [evaluateOutput_dir 'alpha_hat_ite' num2str(ite_num) '.txt'];
+    write2file( evaluateOutput_dir,w_file_name,w' );
+    write2file( evaluateOutput_dir,alpha_hat_file_name,alpha_hat );
+    GetNDCG(num2str(ite_num),w,data_fold_train,data_fold_vali,data_fold_test,...
+        original_data_dir,evaluateInput_dir,evaluateOutput_dir,eval_score_perl_file);
 end
 t1 = toc;
 fun_val_file_name =  [evaluateOutput_dir 'fun_val_C_' num2str(C) '.txt'];
@@ -92,6 +99,35 @@ end
 proper_eta = eta;
 end
 
+function gradient = vec_stochastic_gradientOfLoss_A(Q,A,alpha,C)
+tic;
+gradient_regular = (Q * alpha);
+t1 = toc;
+% iterate all preference pairs
+%sum_pp = (alpha'*gram_matrix);
+tic;
+tmp = 1-A*gradient_regular;
+t2 = toc;
+%A_Q = sparse(A*Q);
+a = A(tmp>0,:);
+gradient_loss = zeros(1,length(alpha));
+tic;
+divisor = length(a);
+divident = length(alpha)*4;
+quotient = floor(divisor/divident);
+%remain = rem(divisor,divident);
+for i = 1:quotient
+    j = (i-1)*divident+1:i*divident;
+    tmp2 =a(j,:)*Q;
+    gradient_loss = gradient_loss + sum(tmp2,1);
+end
+j = i*divident+1:divisor;
+tmp2 =a(j,:)*Q;
+gradient_loss = gradient_loss + sum(tmp2,1);
+t3 = toc;
+%gradient_loss = sum(A_Q(tmp>0,:),1);
+gradient = gradient_regular - C * gradient_loss';
+end
 function gradient = vec_gradientOfLoss_A(Q,A ,alpha , C)
 tic;
 gradient_regular = (Q * alpha);

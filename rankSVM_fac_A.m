@@ -55,11 +55,19 @@ while 1
         break;
     end
 end
-
+if rem(ite_num,50) ~=0
+    alpha_hat = GetAlpha_by_vMatrix(V_new,pps_index_by_qid_set);
+    w = alpha_hat'*sample_pp_fea;
+    w_file_name =  [evaluateOutput_dir 'w_ite' num2str(ite_num) '.txt'];
+    alpha_hat_file_name = [evaluateOutput_dir 'alpha_hat_ite' num2str(ite_num) '.txt'];
+    write2file( evaluateOutput_dir,w_file_name,w' );
+    write2file( evaluateOutput_dir,alpha_hat_file_name,alpha_hat );
+    GetNDCG(num2str(ite_num),w,data_fold_train,data_fold_vali,data_fold_test,...
+        original_data_dir,evaluateInput_dir,evaluateOutput_dir,eval_score_perl_file);
+end
 fprintf('diff=%f\n',diff);
 fun_val_file_name =  [evaluateOutput_dir 'fun_val_C_' num2str(C) '.txt'];
-write2file( evaluateOutput_dir,fun_val_file_name,function_val );
- 
+write2file( evaluateOutput_dir,fun_val_file_name,function_val ); 
 w_fac = alpha_hat'*sample_pp_fea;
 end
 
