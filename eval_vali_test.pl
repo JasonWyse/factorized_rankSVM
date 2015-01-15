@@ -138,6 +138,7 @@ sub BestVali_TestResult
 	foreach (@C_set)
 	{
 		my $C_dir = $fold_dir.$_.'/';
+		
 		if(-d $C_dir)
 		{	#filter "." and ".." in the current directory
 			if($C_dir = /\.*\d+\.*/)
@@ -145,6 +146,11 @@ sub BestVali_TestResult
 				#my $C_dir = $model_dir.'/'.$_.'/'."\n";
 				my $C_dir = $fold_dir.$_.'/';
 				my $C_value = $_;
+				my $real_max_ite_num = exist_MaxIteNum($C_dir);
+				if($real_max_ite_num < $max_ite_num)
+				{
+					$max_ite_num = $real_max_ite_num;
+				}
 				#print $C_value."\n";
 				opendir(C_DIR, $C_dir) || die "Can't open directory $C_dir";
 				my @file_names = readdir(C_DIR); 
@@ -180,6 +186,26 @@ sub BestVali_TestResult
 	$tmp{'2'} = %hs_C_test_NDCG; 
 	return %tmp;
 	return %hs_C_vali_map;
+}
+
+sub exist_MaxIteNum
+{
+	my $C_dir = $_[0];
+	opendir(C_DIR, $C_dir) || die "Can't open directory $C_dir";
+	my @file_names = readdir(C_DIR); 
+	my $real_max_ite_num = 1;
+	foreach (@file_names)
+	{
+		my $num = ($_ =~ /NDCG_vali_ite(\d+).*/);
+		if(/NDCG_vali_ite\d+.*/)#choose the max iterate vali
+		{
+			if($num>$real_max_ite_num)
+			{
+				$real_max_ite_num = $num;
+			}
+		}	
+	}
+	return $real_max_ite_num;
 }
 
 sub get_NDCG

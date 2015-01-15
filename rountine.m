@@ -13,8 +13,8 @@ else
     eval_score_perl_file = 'eval-score-mslr-3.0.pl ';
 end
  epsilon = 0.01;
- fold_set = [1,2];
- max_iterate_num = 1;
+ fold_set = [1,2,3];
+ max_iterate_num = 2;
  feature_num = 45;
  V_col_size = 4;
 for i = -5:1:5

@@ -34,7 +34,7 @@ while 1
         V_old = V_new;
         ite_num = ite_num + 1;
         function_val(ite_num,1) = new_fun_val;
-        fprintf('ite%d:old_fun_val=%f\tnew_fun_val=%f\tdiff=%f\n',ite_num,old_fun_val,new_fun_val,diff);
+        fprintf('ite%d(rankSVM_fac):old_fun_val=%f\tnew_fun_val=%f\tdiff=%f\n',ite_num,old_fun_val,new_fun_val,diff);
         old_fun_val = new_fun_val;
         if diff<200
             eta = proper_eta;
