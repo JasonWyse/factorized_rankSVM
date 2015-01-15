@@ -30,7 +30,7 @@ while 1
     t2 = toc;
     %     new_fun_val = lossFun(gram_matrix ,pps_index_by_qid_set, V_new, C);
     diff = abs(old_fun_val-new_fun_val);
-    if( ite_num < max_iterate_num)%diff > epsilon &&
+    if( diff > epsilon &&ite_num < max_iterate_num)%
         V_old = V_new;
         ite_num = ite_num + 1;
         function_val(ite_num,1) = new_fun_val;
