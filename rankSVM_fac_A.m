@@ -21,8 +21,8 @@ while 1
     tic;
     %     gradient = vec_gradientOfLoss(gram_matrix ,pps_index_by_qid_set, V_old, C);
     %gradient = vec_gradientOfLoss_A(Q,A ,V_old , C,pps_index_by_qid_set);
-    %gradient2 = vec_gradientOfLoss_A2(Q,A ,V_old , C,pps_index_by_qid_set,pp_details_qid_set,label_set);
-    gradient2 = vec_stochastic_gradientOfLoss_A2(Q,A ,V_old , C,pp_details_qid_set);
+    gradient2 = vec_gradientOfLoss_A2(Q,A ,V_old , C,pps_index_by_qid_set,pp_details_qid_set,label_set);
+    %gradient2 = vec_stochastic_gradientOfLoss_A2(Q,A ,V_old , C,pp_details_qid_set);
     %      gradient = vec_gradientOfLoss_A(Q,A ,alpha_old , C);
     t1 = toc;
     tic;

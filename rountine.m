@@ -6,7 +6,7 @@
 % max_iterate_num = 100;
 % feature_num = 45;
 % eval_score_perl_file = 'eval-score-mslr-4.0.pl ';
-dataset_name = 'MQ2008';
+dataset_name = '2003_hp_dataset';
 if(regexpi(dataset_name,'MQ.*'))
     eval_score_perl_file = 'eval-score-mslr-4.0.pl ';
 else
@@ -14,11 +14,11 @@ else
 end
  epsilon = 0.01;
  fold_set = [1,2,3];
- max_iterate_num = 2;
+ max_iterate_num = 200;
  feature_num = 45;
  V_col_size = 4;
-for i = -5:1:5
-    C_set(i+6,1) = 10^(i);
+for i = -2:1:2
+    C_set(i+3,1) = 10^(i);
 end
 for i = 1:length(fold_set)
     original_data_dir = ['data/' dataset_name '/Fold' num2str(fold_set(i)) '/'];
