@@ -12,6 +12,7 @@ alpha_old = alpha;
 alpha_new = alpha_old;%zeros(length(alpha_old),1);
 effi = 5;
 power = 3;
+output_interval = 10;
 eta = effi*(10^(-power));
 ite_num = 0;
 [~,~,old_fun_val] = lossFun_A(Q,A , alpha_old, C);%lossFun(gram_matrix , alpha_old, C);
@@ -40,7 +41,7 @@ while 1
 %         if rem(ite_num,50) ==0
 %             disp([ite_num,diff,new_fun_val]);
 %         end
-        if rem(ite_num,50) ==0
+        if rem(ite_num,output_interval) ==0
             [w,alpha_hat] = getW(A,alpha_new,sample_pp_fea);
             w_file_name =  [evaluateOutput_dir 'w_ite' num2str(ite_num) '.txt'];
             alpha_hat_file_name = [evaluateOutput_dir 'alpha_hat_ite' num2str(ite_num) '.txt'];
@@ -53,7 +54,7 @@ while 1
         break;
     end    
 end
-if rem(ite_num,50) ~=0
+if rem(ite_num,output_interval) ~=0
     [w,alpha_hat] = getW(A,alpha_new,sample_pp_fea);
     w_file_name =  [evaluateOutput_dir 'w_ite' num2str(ite_num) '.txt'];
     alpha_hat_file_name = [evaluateOutput_dir 'alpha_hat_ite' num2str(ite_num) '.txt'];

@@ -10,6 +10,7 @@ GetNDCG(num2str(0),w,data_fold_train,data_fold_vali,data_fold_test,...
 
 effi = 5;
 power = 3;
+output_interval = 10;
 eta = effi*(10^(-power));
 V_old = V;
 V_new = V;
@@ -41,7 +42,7 @@ while 1
         end
 %         if rem(ite_num,50) ==0
 %             disp([ite_num,diff,new_fun_val]);
-        if rem(ite_num,50) ==0
+        if rem(ite_num,output_interval) ==0
             alpha_hat = GetAlpha_by_vMatrix(V_new,pps_index_by_qid_set); 
             w = alpha_hat'*sample_pp_fea;
             w_file_name =  [evaluateOutput_dir 'w_ite' num2str(ite_num) '.txt'];
@@ -55,7 +56,7 @@ while 1
         break;
     end
 end
-if rem(ite_num,50) ~=0
+if rem(ite_num,output_interval) ~=0
     alpha_hat = GetAlpha_by_vMatrix(V_new,pps_index_by_qid_set);
     w = alpha_hat'*sample_pp_fea;
     w_file_name =  [evaluateOutput_dir 'w_ite' num2str(ite_num) '.txt'];
