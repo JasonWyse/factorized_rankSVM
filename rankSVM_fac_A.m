@@ -22,8 +22,8 @@ while 1
     tic;
     %     gradient = vec_gradientOfLoss(gram_matrix ,pps_index_by_qid_set, V_old, C);
     %gradient = vec_gradientOfLoss_A(Q,A ,V_old , C,pps_index_by_qid_set);
-    gradient2 = vec_gradientOfLoss_A2(Q,A ,V_old , C,pps_index_by_qid_set,pp_details_qid_set,label_set);
-    %gradient2 = vec_stochastic_gradientOfLoss_A2(Q,A ,V_old , C,pp_details_qid_set);
+    %gradient2 = vec_gradientOfLoss_A2(Q,A ,V_old , C,pps_index_by_qid_set,pp_details_qid_set,label_set);
+    gradient2 = vec_stochastic_gradientOfLoss_A2(Q,A ,V_old , C,pp_details_qid_set);
     %      gradient = vec_gradientOfLoss_A(Q,A ,alpha_old , C);
     t1 = toc;
     tic;
@@ -212,7 +212,7 @@ for i = 1:length(V)
         gradient_regular_coeff_matrix = zeros(size(pp_ijk_global_index_matrix));
 %         tic;
         for k = 1:size(pp_ijk_global_index_matrix,2);
-            gradient_regular_coeff_matrix(:,k) = A(pp_ijk_global_index_matrix(:,k),:)*(Q*alpha);
+            gradient_regular_coeff_matrix(:,k) = A(pp_ijk_global_index_matrix(:,k),:)*Q*alpha;
         end
 %         t1 = toc;
         
@@ -227,16 +227,6 @@ for i = 1:length(V)
             tmp2 = A(tmp>0,:)*(Q*A(pp_ijk_global_index_matrix(:,k),:)');
             gradient_loss_coeff_matrix(k,:) = sum(tmp2,1);
         end
-%         t2 = toc;
-%         tic;
-%         we use A(:) to convert matrix into a column vector
-%         col_vec =  pp_ijk_global_index_matrix(:);
-%         tmp22 = A(tmp>0,:)*(Q*A(pp_ijk_global_index_matrix(:),:)');
-%         tmp3 = sum(tmp22,1);
-%         [M,N] = size(gradient_loss_coeff_matrix);
-%         tmp4 = reshape(tmp3,N,M);        
-%         gradient_loss_coeff_matrix = tmp4';        
-%         t3 = toc;
         %each row of gradient_loss_matrix stands for gradient_loss component of doc_ik
         gradient_loss_matrix = gradient_loss_coeff_matrix * V{i}(v_jk_set_qid,:);
         gradient_matrix = gradient_regular_matrix - C * gradient_loss_matrix;

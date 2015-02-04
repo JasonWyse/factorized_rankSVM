@@ -6,7 +6,7 @@
 % max_iterate_num = 100;
 % feature_num = 45;
 % eval_score_perl_file = 'eval-score-mslr-4.0.pl ';
-dataset_name = '2003_hp_dataset';
+dataset_name = 'OHSUMED';
 if(regexpi(dataset_name,'MQ.*'))
     eval_score_perl_file = 'eval-score-mslr-4.0.pl ';
 else
@@ -14,7 +14,7 @@ else
 end
  epsilon = 0.01;
  fold_set = [1,2,3];
- max_iterate_num = 200;
+ max_iterate_num = 20;
  feature_num = 45;
  V_col_size = 4;
 for i = -2:1:2
