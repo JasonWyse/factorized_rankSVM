@@ -28,7 +28,7 @@ while 1
     tic;
     alpha_new = alpha_old - proper_eta * gradient;
     %[~,~,new_fun_val]  = lossFun_A(Q,A , alpha_new, C);%lossFun(gram_matrix , alpha_new, C);
-    diff=abs(old_fun_val-new_fun_val);
+    diff=(old_fun_val-new_fun_val);
     if( diff > epsilon &&ite_num < max_iterate_num)%
         alpha_old = alpha_new;        
         ite_num = ite_num + 1;
@@ -88,7 +88,8 @@ lossFun_value = 0.5* regular_term + C*loss_term;
 end
 
 function [proper_eta,new_fun_val] = find_eta(Q,A,C,eta,alpha_old,gradient,old_fun_val)
-while 1
+ite = 50;
+while ite>0
     alpha_new = alpha_old - eta * gradient;
     [~,~,new_fun_val]  = lossFun_A(Q,A , alpha_new, C);
     if(new_fun_val<old_fun_val)
@@ -96,6 +97,7 @@ while 1
     else
         eta = eta/2;
     end
+    ite = ite-1;
 end
 proper_eta = eta;
 end

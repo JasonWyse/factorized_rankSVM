@@ -30,7 +30,7 @@ while 1
     [proper_eta,new_fun_val,V_new] = find_eta(Q,A,C,eta,V_old,gradient2,old_fun_val,pps_index_by_qid_set);
     t2 = toc;
     %     new_fun_val = lossFun(gram_matrix ,pps_index_by_qid_set, V_new, C);
-    diff =abs (old_fun_val-new_fun_val);
+    diff =(old_fun_val-new_fun_val);
     if( diff > epsilon &&ite_num < max_iterate_num)%
         V_old = V_new;
         ite_num = ite_num + 1;
