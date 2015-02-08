@@ -1,24 +1,17 @@
-% original_data_dir = 'data/OHSUMED/Fold1/';
-% eval_score_perl_file = 'eval-score-mslr-3.0.pl ';
-% V_col_size = 4;
-% C = 10;
-% epsilon = 0.01;
-% max_iterate_num = 100;
-% feature_num = 45;
-% eval_score_perl_file = 'eval-score-mslr-4.0.pl ';
 dataset_name = 'OHSUMED';
 if(regexpi(dataset_name,'MQ.*'))
     eval_score_perl_file = 'eval-score-mslr-4.0.pl ';
 else
     eval_score_perl_file = 'eval-score-mslr-3.0.pl ';
 end
- epsilon = 0.01;
- fold_set = [1,2,3];
- max_iterate_num = 20;
+ epsilon = 10^(-3);
+ fold_set = [1,2];
+ max_iterate_num = 200;
  feature_num = 45;
  V_col_size = 4;
-for i = -2:1:2
-    C_set(i+3,1) = 10^(i);
+ C_range = 1;
+for i = -C_range:1:C_range
+    C_set(i+C_range+1,1) = 10^(i);
 end
 for i = 1:length(fold_set)
     original_data_dir = ['data/' dataset_name '/Fold' num2str(fold_set(i)) '/'];

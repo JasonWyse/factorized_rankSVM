@@ -30,7 +30,7 @@ while 1
     [proper_eta,new_fun_val,V_new] = find_eta(Q,A,C,eta,V_old,gradient2,old_fun_val,pps_index_by_qid_set);
     t2 = toc;
     %     new_fun_val = lossFun(gram_matrix ,pps_index_by_qid_set, V_new, C);
-    diff = abs(old_fun_val-new_fun_val);
+    diff =abs (old_fun_val-new_fun_val);
     if( diff > epsilon &&ite_num < max_iterate_num)%
         V_old = V_new;
         ite_num = ite_num + 1;
@@ -81,14 +81,17 @@ w = alpha_hat_final'*sample_pp_fea;
 end
 
 function [proper_eta,new_fun_val,V_new] = find_eta(Q,A,C,eta,V_old,gradient,old_fun_val,pps_index_by_qid_set)
-while 1
+ite=50;
+while ite>0
     V_new = updateV_with_gradient(V_old, gradient,eta);
+    
     new_fun_val = lossFun_A(Q,A , V_new, C,pps_index_by_qid_set);
     if(new_fun_val<old_fun_val)
         break;
     else
         eta = eta/2;
     end
+    ite = ite -1;
 end
 proper_eta = eta;
 end
@@ -176,8 +179,10 @@ for i = 1:length(stochastic_qid_set)
         gradient_loss_coeff_vec = sum(tmp2);
         gradient_loss_qid_ik = gradient_loss_coeff_vec * V_old{stochastic_qid_set(i)}(v_jk_set_qid,:);
         gradient_qid_ik_vec = gradient_regular_qid_ik - C * gradient_loss_qid_ik;
+        % no normalization to the V matrix
         gradient{stochastic_qid_set(i)}(v_ik_set_qid(j),:) = gradient_qid_ik_vec;   
-        
+        %add normalization to the gradient
+        %gradient{stochastic_qid_set(i)}(v_ik_set_qid(j),:) = gradient_qid_ik_vec + V_old{stochastic_qid_set(i)}(v_ik_set_qid(j),:);   
     end    
 end
 end
