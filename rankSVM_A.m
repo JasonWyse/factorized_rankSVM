@@ -56,6 +56,7 @@ while 1
     end    
 end
 if rem(ite_num,output_interval) ~=0
+    fprintf('ite%d(rankSVM):old_fun_val=%f\tnew_fun_val=%f\tdiff=%f\n',ite_num,old_fun_val,new_fun_val,diff);
     [w,alpha_hat] = getW(A,alpha_new,sample_pp_fea);
     w_file_name =  [evaluateOutput_dir 'w_ite' num2str(ite_num) '.txt'];
     alpha_hat_file_name = [evaluateOutput_dir 'alpha_hat_ite' num2str(ite_num) '.txt'];
