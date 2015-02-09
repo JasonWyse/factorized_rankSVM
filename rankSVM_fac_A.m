@@ -10,7 +10,7 @@ GetNDCG(num2str(0),w,data_fold_train,data_fold_vali,data_fold_test,...
 
 effi = 5;
 power = 3;
-output_interval = 10;
+output_interval = 50;
 eta = effi*(10^(-power));
 V_old = V;
 V_new = V;
