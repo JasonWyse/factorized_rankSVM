@@ -28,12 +28,12 @@ while 1
     tic;
     alpha_new = alpha_old - proper_eta * gradient;
     %[~,~,new_fun_val]  = lossFun_A(Q,A , alpha_new, C);%lossFun(gram_matrix , alpha_new, C);
-    diff=(old_fun_val-new_fun_val);
+    diff=abs(old_fun_val-new_fun_val);
     if( diff > epsilon &&ite_num < max_iterate_num)%
         alpha_old = alpha_new;        
         ite_num = ite_num + 1;
         function_val(ite_num,1) = new_fun_val;
-        fprintf('ite%d(rankSVM):old_fun_val=%f\tnew_fun_val=%f\tdiff=%f\n',ite_num,old_fun_val,new_fun_val,diff);
+%         fprintf('ite%d(rankSVM):old_fun_val=%f\tnew_fun_val=%f\tdiff=%f\n',ite_num,old_fun_val,new_fun_val,diff);
         old_fun_val = new_fun_val;
         if diff<200
             eta = proper_eta;
@@ -42,6 +42,7 @@ while 1
 %             disp([ite_num,diff,new_fun_val]);
 %         end
         if rem(ite_num,output_interval) ==0
+            fprintf('ite%d(rankSVM):old_fun_val=%f\tnew_fun_val=%f\tdiff=%f\n',ite_num,old_fun_val,new_fun_val,diff);
             [w,alpha_hat] = getW(A,alpha_new,sample_pp_fea);
             w_file_name =  [evaluateOutput_dir 'w_ite' num2str(ite_num) '.txt'];
             alpha_hat_file_name = [evaluateOutput_dir 'alpha_hat_ite' num2str(ite_num) '.txt'];
